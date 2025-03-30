@@ -4,7 +4,7 @@ import org.apache.commons.cli.*;
 
 public class CommandParser {
 
-    public CommandLine parseArgs(String[] args) {
+    public static CommandLine parseArgs(String[] args) {
         Options cliOptions = new Options();
         cliOptions.addRequiredOption("s", "source", true, "File containing the grocery list");
         cliOptions.addOption("f", "format", true, "Format of the grocery list file (json or csv)");
