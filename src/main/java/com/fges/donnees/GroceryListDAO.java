@@ -1,9 +1,11 @@
-package com.fges;
+package com.fges.donnees;
 
+import com.fges.stockage.GroceryListStorage;
 import java.io.IOException;
 import java.util.List;
 
-class GroceryListDAO {
+// Gère l'accès aux données de la liste de courses.
+public class GroceryListDAO {
     private final GroceryListStorage storage;
 
     public GroceryListDAO(GroceryListStorage storage) {

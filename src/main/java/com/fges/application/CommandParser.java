@@ -1,7 +1,8 @@
-package com.fges;
+package com.fges.application;
 
 import org.apache.commons.cli.*;
 
+// Gère l'analyse des arguments passés en ligne de commande.
 public class CommandParser {
     public static CommandLine parseArgs(String[] args) {
         Options cliOptions = new Options();

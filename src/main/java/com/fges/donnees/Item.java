@@ -1,8 +1,9 @@
-package com.fges;
+package com.fges.donnees;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+// Représente un article de la liste de courses avec son nom, sa quantité et sa catégorie.
 public class Item {
     private String name;
     private int quantity;

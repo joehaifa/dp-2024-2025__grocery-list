@@ -1,12 +1,19 @@
-package com.fges;
+package com.fges.application;
 
+import com.fges.commandes.HandleAddCommand;
+import com.fges.commandes.HandleListCommand;
+import com.fges.commandes.HandleRemoveCommand;
+import com.fges.donnees.GroceryListDAO;
+import com.fges.stockage.CsvStorage;
+import com.fges.stockage.GroceryListStorage;
+import com.fges.stockage.JsonStorage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.cli.CommandLine;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
+// Exécute la commande demandée en fonction des arguments fournis.
 class CommandExecutor {
     private final ObjectMapper objectMapper;
 
