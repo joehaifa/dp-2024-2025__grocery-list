@@ -6,15 +6,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Item {
     private String name;
     private int quantity;
+    private String category;
 
-    // Constructeur par défaut
-    public Item() {}
-
+    public Item() {
+        this.category = "default";
+    }
     // Constructeur avec annotation JSON pour que Jackson puisse l'utiliser
     @JsonCreator
-    public Item(@JsonProperty("name") String name, @JsonProperty("quantity") int quantity) {
+    public Item(@JsonProperty("name") String name, @JsonProperty("quantity") int quantity,@JsonProperty("category") String category) {
         this.name = name;
         this.quantity = quantity;
+        this.category = category != null ? category : "default";
     }
     public String getName() {
         return name;
@@ -31,6 +33,13 @@ public class Item {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    public void setCategory(String category) {
+        this.category=category;
+    }
+
+    public String getCategory() { return category; }
+
 
     @Override
     public String toString() {

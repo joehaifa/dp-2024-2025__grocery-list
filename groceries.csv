@@ -1,4 +1,7 @@
-Item,Quantity
-Bread,5
-lol,10
-kou,10
+Item,Quantity,Category
+Bread,5,default
+lol,10,default
+kou,10,default
+Milk,10,default
+Milk,10,default
+choco,10,default

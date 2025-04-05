@@ -3,11 +3,11 @@ package com.fges;
 import org.apache.commons.cli.*;
 
 public class CommandParser {
-
     public static CommandLine parseArgs(String[] args) {
         Options cliOptions = new Options();
         cliOptions.addRequiredOption("s", "source", true, "File containing the grocery list");
         cliOptions.addOption("f", "format", true, "Format of the grocery list file (json or csv)");
+        cliOptions.addOption("c", "category", true, "Category of the item (optional)");
 
         CommandLineParser parser = new DefaultParser();
         try {
