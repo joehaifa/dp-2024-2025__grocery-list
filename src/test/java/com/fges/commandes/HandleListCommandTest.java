@@ -1,7 +1,7 @@
 package com.fges.commandes;
 
+import com.fges.donnees.GroceryItem;
 import com.fges.donnees.GroceryListDAO;
-import com.fges.donnees.Item;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -16,15 +16,15 @@ public class HandleListCommandTest {
         // Arrange
         GroceryListDAO dao = mock(GroceryListDAO.class);
         when(dao.getItems()).thenReturn(List.of(
-                new Item("pomme", 2, "fruit"),
-                new Item("carotte", 3, "legume")
+                new GroceryItem("pomme", 2, "fruit"),
+                new GroceryItem("carotte", 3, "legume")
         ));
 
-        HandleListCommand command = new HandleListCommand();
+        HandleListCommand command = new HandleListCommand(dao);
         List<String> args = List.of("list");
 
         // Act
-        int result = command.execute(args, dao);
+        int result = command.execute(args);
 
         // Assert
         assertThat(result).isEqualTo(0);

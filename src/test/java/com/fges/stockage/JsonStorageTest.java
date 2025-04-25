@@ -1,7 +1,7 @@
 package com.fges.stockage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fges.donnees.Item;
+import com.fges.donnees.GroceryItem;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -21,20 +21,20 @@ public class JsonStorageTest {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonStorage storage = new JsonStorage(tempFile.getAbsolutePath(), objectMapper);
 
-        List<Item> itemsToSave = List.of(
-                new Item("pomme", 3, "fruit"),
-                new Item("carotte", 1, "legume")
+        List<GroceryItem> itemsToSave = List.of(
+                new GroceryItem("pomme", 3, "fruit"),
+                new GroceryItem("carotte", 1, "legume")
         );
 
         // Act
         storage.save(itemsToSave);
-        List<Item> loadedItems = storage.load();
+        List<GroceryItem> loadedGroceryItems = storage.load();
 
         // Assert
-        assertThat(loadedItems).hasSize(2);
-        assertThat(loadedItems.get(0).getName()).isEqualTo("pomme");
-        assertThat(loadedItems.get(0).getQuantity()).isEqualTo(3);
-        assertThat(loadedItems.get(0).getCategory()).isEqualTo("fruit");
+        assertThat(loadedGroceryItems).hasSize(2);
+        assertThat(loadedGroceryItems.get(0).getName()).isEqualTo("pomme");
+        assertThat(loadedGroceryItems.get(0).getQuantity()).isEqualTo(3);
+        assertThat(loadedGroceryItems.get(0).getCategory()).isEqualTo("fruit");
     }
 
     @Test
@@ -48,7 +48,7 @@ public class JsonStorageTest {
         JsonStorage storage = new JsonStorage(tempFile.getAbsolutePath(), new ObjectMapper());
 
         // Act
-        List<Item> result = storage.load();
+        List<GroceryItem> result = storage.load();
 
         // Assert
         assertThat(result).isEmpty();

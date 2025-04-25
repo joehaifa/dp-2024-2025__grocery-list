@@ -25,57 +25,57 @@ public class GroceryListDAOTest {
     @Test
     public void test_getItems_should_return_items_from_storage() {
         // Arrange
-        List<Item> fakeItems = List.of(new Item("pomme", 3, "fruit"));
-        when(storage.load()).thenReturn(fakeItems);
+        List<GroceryItem> fakeGroceryItems = List.of(new GroceryItem("pomme", 3, "fruit"));
+        when(storage.load()).thenReturn(fakeGroceryItems);
 
         // Act
-        List<Item> result = dao.getItems();
+        List<GroceryItem> result = dao.getItems();
 
         // Assert
-        assertThat(result).containsExactlyElementsOf(fakeItems);
+        assertThat(result).containsExactlyElementsOf(fakeGroceryItems);
         verify(storage).load();
     }
 
     @Test
     public void test_addItem_should_add_and_save_item() throws IOException {
         // Arrange
-        List<Item> items = new ArrayList<>();
-        when(storage.load()).thenReturn(items);
+        List<GroceryItem> groceryItems = new ArrayList<>();
+        when(storage.load()).thenReturn(groceryItems);
 
-        Item item = new Item("banane", 2, "fruit");
+        GroceryItem groceryItem = new GroceryItem("banane", 2, "fruit");
 
         // Act
-        dao.addItem(item);
+        dao.addItem(groceryItem);
 
         // Assert
-        assertThat(items).contains(item);
-        verify(storage).save(items);
+        assertThat(groceryItems).contains(groceryItem);
+        verify(storage).save(groceryItems);
     }
 
     @Test
     public void test_removeItem_should_remove_and_save_when_item_exists() throws IOException {
         // Arrange
-        List<Item> items = new ArrayList<>();
-        Item item = new Item("carotte", 2, "légume");
-        items.add(item);
+        List<GroceryItem> groceryItems = new ArrayList<>();
+        GroceryItem groceryItem = new GroceryItem("carotte", 2, "légume");
+        groceryItems.add(groceryItem);
 
-        when(storage.load()).thenReturn(items);
+        when(storage.load()).thenReturn(groceryItems);
 
         // Act
         boolean result = dao.removeItem("carotte");
 
         // Assert
         assertThat(result).isTrue();
-        assertThat(items).doesNotContain(item);
-        verify(storage).save(items);
+        assertThat(groceryItems).doesNotContain(groceryItem);
+        verify(storage).save(groceryItems);
     }
 
     @Test
     public void test_removeItem_should_return_false_when_item_not_found() throws IOException {
         // Arrange
-        List<Item> items = new ArrayList<>();
-        items.add(new Item("tomate", 1, "fruit"));
-        when(storage.load()).thenReturn(items);
+        List<GroceryItem> groceryItems = new ArrayList<>();
+        groceryItems.add(new GroceryItem("tomate", 1, "fruit"));
+        when(storage.load()).thenReturn(groceryItems);
 
         // Act
         boolean result = dao.removeItem("banane");

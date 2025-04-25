@@ -1,7 +1,7 @@
 package com.fges.stockage;
 
 
-import com.fges.donnees.Item;
+import com.fges.donnees.GroceryItem;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -18,7 +18,7 @@ public class JsonStorage implements GroceryListStorage {
         this.objectMapper = objectMapper;
     }
 
-    public List<Item> load() {
+    public List<GroceryItem> load() {
         try {
             return objectMapper.readValue(new java.io.File(filePath), new com.fasterxml.jackson.core.type.TypeReference<>() {});
         } catch (IOException e) {
@@ -26,7 +26,7 @@ public class JsonStorage implements GroceryListStorage {
         }
     }
 
-    public void save(List<Item> items) throws IOException {
-        objectMapper.writeValue(new java.io.File(filePath), items);
+    public void save(List<GroceryItem> groceryItems) throws IOException {
+        objectMapper.writeValue(new java.io.File(filePath), groceryItems);
     }
 }

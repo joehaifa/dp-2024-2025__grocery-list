@@ -1,17 +1,23 @@
 package com.fges.commandes;
 
+import com.fges.donnees.GroceryItem;
 import com.fges.donnees.GroceryListDAO;
-import com.fges.donnees.Item;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-// Implémente la commande "list" pour afficher les articles par catégorie.
 public class HandleListCommand implements Command {
-    public int execute(List<String> args, GroceryListDAO dao) {
-        Map<String, List<Item>> groupedByCategory = dao.getItems().stream()
-                .collect(Collectors.groupingBy(Item::getCategory));
+    private final GroceryListDAO dao;
+
+    public HandleListCommand(GroceryListDAO dao) {
+        this.dao = dao;
+    }
+
+    @Override
+    public int execute(List<String> args) {
+        Map<String, List<GroceryItem>> groupedByCategory = dao.getItems().stream()
+                .collect(Collectors.groupingBy(GroceryItem::getCategory));
 
         groupedByCategory.forEach((category, items) -> {
             System.out.println("#" + category + ":");

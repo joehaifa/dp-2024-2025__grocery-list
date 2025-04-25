@@ -12,20 +12,20 @@ public class GroceryListDAO {
         this.storage = storage;
     }
 
-    public List<Item> getItems() {
+    public List<GroceryItem> getItems() {
         return storage.load();
     }
 
-    public void addItem(Item item) throws IOException {
-        List<Item> items = getItems();
-        items.add(item);
-        storage.save(items);
+    public void addItem(GroceryItem groceryItem) throws IOException {
+        List<GroceryItem> groceryItems = getItems();
+        groceryItems.add(groceryItem);
+        storage.save(groceryItems);
     }
 
     public boolean removeItem(String name) throws IOException {
-        List<Item> items = getItems();
-        boolean removed = items.removeIf(item -> item.getName().equalsIgnoreCase(name));
-        if (removed) storage.save(items);
+        List<GroceryItem> groceryItems = getItems();
+        boolean removed = groceryItems.removeIf(item -> item.getName().equalsIgnoreCase(name));
+        if (removed) storage.save(groceryItems);
         return removed;
     }
 }

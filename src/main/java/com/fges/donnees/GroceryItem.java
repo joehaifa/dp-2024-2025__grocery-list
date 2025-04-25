@@ -4,17 +4,17 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 // Représente un article de la liste de courses avec son nom, sa quantité et sa catégorie.
-public class Item {
+public class GroceryItem {
     private String name;
     private int quantity;
     private String category;
 
-    public Item() {
+    public GroceryItem() {
         this.category = "default";
     }
     // Constructeur avec annotation JSON pour que Jackson puisse l'utiliser
     @JsonCreator
-    public Item(@JsonProperty("name") String name, @JsonProperty("quantity") int quantity,@JsonProperty("category") String category) {
+    public GroceryItem(@JsonProperty("name") String name, @JsonProperty("quantity") int quantity, @JsonProperty("category") String category) {
         this.name = name;
         this.quantity = quantity;
         this.category = category != null ? category : "default";

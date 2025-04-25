@@ -15,11 +15,11 @@ public class HandleRemoveCommandTest {
     public void test_execute_should_return_1_when_arguments_missing() throws IOException {
         // Arrange
         GroceryListDAO dao = mock(GroceryListDAO.class);
-        HandleRemoveCommand command = new HandleRemoveCommand();
+        HandleRemoveCommand command = new HandleRemoveCommand(dao);
         List<String> args = List.of("remove");
 
         // Act
-        int result = command.execute(args, dao);
+        int result = command.execute(args);
 
         // Assert
         assertThat(result).isEqualTo(1);
@@ -32,11 +32,11 @@ public class HandleRemoveCommandTest {
         GroceryListDAO dao = mock(GroceryListDAO.class);
         when(dao.removeItem("banane")).thenReturn(true);
 
-        HandleRemoveCommand command = new HandleRemoveCommand();
+        HandleRemoveCommand command = new HandleRemoveCommand(dao);
         List<String> args = List.of("remove", "banane");
 
         // Act
-        int result = command.execute(args, dao);
+        int result = command.execute(args);
 
         // Assert
         assertThat(result).isEqualTo(0);
@@ -49,11 +49,11 @@ public class HandleRemoveCommandTest {
         GroceryListDAO dao = mock(GroceryListDAO.class);
         when(dao.removeItem("banane")).thenReturn(false);
 
-        HandleRemoveCommand command = new HandleRemoveCommand();
+        HandleRemoveCommand command = new HandleRemoveCommand(dao);
         List<String> args = List.of("remove", "banane");
 
         // Act
-        int result = command.execute(args, dao);
+        int result = command.execute(args);
 
         // Assert
         assertThat(result).isEqualTo(1);
