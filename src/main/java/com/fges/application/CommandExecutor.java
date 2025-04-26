@@ -1,15 +1,17 @@
 package com.fges.application;
 
-import com.fges.commandes.*;
-import com.fges.donnees.GroceryListDAO;
-import com.fges.stockage.CsvStorage;
-import com.fges.stockage.GroceryListStorage;
-import com.fges.stockage.JsonStorage;
+import com.fges.commands.*;
+import com.fges.grocerydata.GroceryListDAO;
+import com.fges.storage.CsvStorage;
+import com.fges.storage.GroceryListStorage;
+import com.fges.storage.JsonStorage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.cli.CommandLine;
 
 import java.io.IOException;
 import java.util.List;
+
+// Executes the appropriate command based on parsed CLI arguments.
 
 class CommandExecutor {
     private final ObjectMapper objectMapper;

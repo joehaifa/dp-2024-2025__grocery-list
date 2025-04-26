@@ -1,8 +1,9 @@
-package com.fges.donnees;
+package com.fges.grocerydata;
 
-import com.fges.stockage.GroceryListStorage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import com.fges.storage.GroceryListStorage;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -1,7 +1,8 @@
-package com.fges.stockage;
+package com.fges.storage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fges.donnees.GroceryItem;
+import com.fges.grocerydata.GroceryItem;
+
 import org.junit.jupiter.api.Test;
 
 import java.io.File;

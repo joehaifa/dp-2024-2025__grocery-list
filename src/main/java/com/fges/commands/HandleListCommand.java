@@ -1,12 +1,13 @@
-package com.fges.commandes;
-
-import com.fges.donnees.GroceryItem;
-import com.fges.donnees.GroceryListDAO;
+package com.fges.commands;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.fges.grocerydata.GroceryItem;
+import com.fges.grocerydata.GroceryListDAO;
+
+// Handles the "list" command to display grocery items grouped by category.
 public class HandleListCommand implements Command {
     private final GroceryListDAO dao;
 
