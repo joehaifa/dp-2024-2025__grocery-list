@@ -1,14 +1,14 @@
-package com.fges.commandes;
-
-import com.fges.donnees.GroceryListDAO;
+package com.fges.commands;
 
 import java.time.LocalDate;
 import java.util.List;
 
+// Handles the "info" command to display the current date, operating system, and Java version.
 public class HandleInfoCommand implements Command {
 
+    @Override
     public int execute(List<String> args) {
-        String date = java.time.LocalDate.now().toString();
+        String date = LocalDate.now().toString();
         String os = System.getProperty("os.name");
         String javaVersion = System.getProperty("java.version");
 

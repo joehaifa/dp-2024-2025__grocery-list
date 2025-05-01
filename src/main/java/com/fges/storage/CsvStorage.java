@@ -1,12 +1,12 @@
-package com.fges.stockage;
-
-import com.fges.donnees.GroceryItem;
+package com.fges.storage;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// Gère le chargement et la sauvegarde des données au format CSV.
+import com.fges.grocerydata.GroceryItem;
+
+// Handles loading and saving grocery items to a CSV file.
 public class CsvStorage implements GroceryListStorage {
     private final String filePath;
 

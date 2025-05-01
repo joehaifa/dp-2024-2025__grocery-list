@@ -1,10 +1,11 @@
-package com.fges.commandes;
-
-import com.fges.donnees.GroceryListDAO;
+package com.fges.commands;
 
 import java.io.IOException;
 import java.util.List;
 
+import com.fges.grocerydata.GroceryListDAO;
+
+// Handles the "remove" command to delete a grocery item from the list.
 public class HandleRemoveCommand implements Command {
     private final GroceryListDAO dao;
 

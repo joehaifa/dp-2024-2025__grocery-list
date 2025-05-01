@@ -1,11 +1,12 @@
-package com.fges.commandes;
-
-import com.fges.donnees.GroceryItem;
-import com.fges.donnees.GroceryListDAO;
+package com.fges.commands;
 
 import java.io.IOException;
 import java.util.List;
 
+import com.fges.grocerydata.GroceryItem;
+import com.fges.grocerydata.GroceryListDAO;
+
+// Handles the "add" command to add a new grocery item to the list.
 public class HandleAddCommand implements Command {
     private final GroceryListDAO dao;
 

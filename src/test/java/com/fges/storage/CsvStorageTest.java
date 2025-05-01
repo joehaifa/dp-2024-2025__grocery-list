@@ -1,7 +1,8 @@
-package com.fges.stockage;
+package com.fges.storage;
 
-import com.fges.donnees.GroceryItem;
 import org.junit.jupiter.api.Test;
+
+import com.fges.grocerydata.GroceryItem;
 
 import java.io.File;
 import java.io.FileWriter;

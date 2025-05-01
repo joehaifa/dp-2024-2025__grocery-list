@@ -1,14 +1,13 @@
-package com.fges.stockage;
+package com.fges.storage;
 
-
-import com.fges.donnees.GroceryItem;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fges.grocerydata.GroceryItem;
 
 import java.io.IOException;
 import java.util.List;
 
-// Gère le chargement et la sauvegarde des données au format JSON.
+// Handles loading and saving grocery items to a JSON file.
 public class JsonStorage implements GroceryListStorage {
     private final ObjectMapper objectMapper;
     private final String filePath;

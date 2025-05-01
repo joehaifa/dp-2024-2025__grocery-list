@@ -3,7 +3,7 @@ package com.fges.application;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 
-// Point d'entrée du programme : lance l'exécution avec les arguments de la ligne de commande.
+// Entry point of the application that initializes and runs the command executor.
 public class Main {
 
     public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();

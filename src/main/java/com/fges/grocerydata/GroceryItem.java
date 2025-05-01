@@ -1,9 +1,9 @@
-package com.fges.donnees;
+package com.fges.grocerydata;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-// Représente un article de la liste de courses avec son nom, sa quantité et sa catégorie.
+// Represents an item in the grocery list with a name, quantity, and category.
 public class GroceryItem {
     private String name;
     private int quantity;
@@ -12,7 +12,7 @@ public class GroceryItem {
     public GroceryItem() {
         this.category = "default";
     }
-    // Constructeur avec annotation JSON pour que Jackson puisse l'utiliser
+
     @JsonCreator
     public GroceryItem(@JsonProperty("name") String name, @JsonProperty("quantity") int quantity, @JsonProperty("category") String category) {
         this.name = name;

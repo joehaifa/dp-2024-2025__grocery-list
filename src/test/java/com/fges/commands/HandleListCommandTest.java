@@ -1,8 +1,9 @@
-package com.fges.commandes;
+package com.fges.commands;
 
-import com.fges.donnees.GroceryItem;
-import com.fges.donnees.GroceryListDAO;
 import org.junit.jupiter.api.Test;
+
+import com.fges.grocerydata.GroceryItem;
+import com.fges.grocerydata.GroceryListDAO;
 
 import java.util.List;
 

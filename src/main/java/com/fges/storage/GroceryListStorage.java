@@ -1,12 +1,12 @@
-package com.fges.stockage;
+package com.fges.storage;
 
-
-import com.fges.donnees.GroceryItem;
 
 import java.io.IOException;
 import java.util.List;
 
-// Interface définissant les méthodes de chargement et sauvegarde de la liste de courses.
+import com.fges.grocerydata.GroceryItem;
+
+// Defines the contract for loading and saving grocery items.
 public interface GroceryListStorage {
     List<GroceryItem> load();
     void save(List<GroceryItem> groceryItems) throws IOException;

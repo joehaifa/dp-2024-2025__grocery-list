@@ -1,4 +1,4 @@
-package com.fges.donnees;
+package com.fges.grocerydata;
 
 import org.junit.jupiter.api.Test;
 

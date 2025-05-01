@@ -19,7 +19,7 @@ public class CommandParser {
             CommandLine cmd = parser.parse(cliOptions, args);
 
             // Get the positional command like "add", "remove", "info" etc.
-             List<String> positionalArgs = cmd.getArgList();
+            List<String> positionalArgs = cmd.getArgList();
 
             if (!positionalArgs.isEmpty()) {
                 String mainCommand = positionalArgs.get(0);
