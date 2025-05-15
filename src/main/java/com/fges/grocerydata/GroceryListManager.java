@@ -6,10 +6,10 @@ import java.util.List;
 import com.fges.storage.GroceryListStorage;
 
 // Manages grocery items by interacting with the storage layer (load, add, remove).
-public class GroceryListDAO {
+public class GroceryListManager {
     private final GroceryListStorage storage;
 
-    public GroceryListDAO(GroceryListStorage storage) {
+    public GroceryListManager(GroceryListStorage storage) {
         this.storage = storage;
     }
 

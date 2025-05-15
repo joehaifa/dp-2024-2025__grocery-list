@@ -1,5 +1,7 @@
 package com.fges.commands;
 
+import com.fges.application.CommandContext;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -7,7 +9,7 @@ import java.util.List;
 public class HandleInfoCommand implements Command {
 
     @Override
-    public int execute(List<String> args) {
+    public int execute(CommandContext context) {
         String date = LocalDate.now().toString();
         String os = System.getProperty("os.name");
         String javaVersion = System.getProperty("java.version");

@@ -3,7 +3,7 @@ package com.fges.commands;
 import org.junit.jupiter.api.Test;
 
 import com.fges.grocerydata.GroceryItem;
-import com.fges.grocerydata.GroceryListDAO;
+import com.fges.grocerydata.GroceryListManager;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public class HandleListCommandTest {
     @Test
     public void test_execute_should_return_0_and_call_getItems() {
         // Arrange
-        GroceryListDAO dao = mock(GroceryListDAO.class);
+        GroceryListManager dao = mock(GroceryListManager.class);
         when(dao.getItems()).thenReturn(List.of(
                 new GroceryItem("pomme", 2, "fruit"),
                 new GroceryItem("carotte", 3, "legume")

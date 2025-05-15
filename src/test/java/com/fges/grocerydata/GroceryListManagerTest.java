@@ -12,15 +12,15 @@ import java.util.List;
 import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class GroceryListDAOTest {
+public class GroceryListManagerTest {
 
     GroceryListStorage storage;
-    GroceryListDAO dao;
+    GroceryListManager dao;
 
     @BeforeEach
     void setup() {
         storage = mock(GroceryListStorage.class);
-        dao = new GroceryListDAO(storage);
+        dao = new GroceryListManager(storage);
     }
 
     @Test

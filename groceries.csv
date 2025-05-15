@@ -1,10 +1,1 @@
-Item,Quantity,Category
-Bread,5,default
-lol,10,default
-kou,10,default
-Milk,10,default
-Milk,10,default
-choco,10,default
-choco,10,default
-choco,10,default
-TRUC,10,dessert
+[{"name":"momo","quantity":10,"category":"default"}]

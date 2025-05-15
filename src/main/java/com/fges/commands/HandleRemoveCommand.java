@@ -3,18 +3,24 @@ package com.fges.commands;
 import java.io.IOException;
 import java.util.List;
 
-import com.fges.grocerydata.GroceryListDAO;
+import com.fges.application.CommandContext;
+import com.fges.grocerydata.GroceryListManager;
 
 // Handles the "remove" command to delete a grocery item from the list.
 public class HandleRemoveCommand implements Command {
-    private final GroceryListDAO dao;
+    private final GroceryListManager dao;
 
-    public HandleRemoveCommand(GroceryListDAO dao) {
+    public HandleRemoveCommand(GroceryListManager dao) {
         this.dao = dao;
     }
 
     @Override
-    public int execute(List<String> args) throws IOException {
+    public int execute(CommandContext context) throws IOException {
+        if (context.getSourceFile().isEmpty()) {
+            System.err.println("Error: -s (source) option is required for this command.");
+            return 1;
+        }
+        List<String> args = context.getPositionalArgs();
         if (args.size() < 2) {
             System.err.println("Usage: remove <item>");
             return 1;

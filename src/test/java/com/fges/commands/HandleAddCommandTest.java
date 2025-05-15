@@ -2,7 +2,7 @@ package com.fges.commands;
 
 import org.junit.jupiter.api.Test;
 
-import com.fges.grocerydata.GroceryListDAO;
+import com.fges.grocerydata.GroceryListManager;
 
 import java.io.IOException;
 import java.util.List;
@@ -15,7 +15,7 @@ public class HandleAddCommandTest {
     @Test
     public void test_execute_should_return_1_when_args_are_missing() throws IOException {
         // Arrange
-        GroceryListDAO dao = mock(GroceryListDAO.class);
+        GroceryListManager dao = mock(GroceryListManager.class);
         HandleAddCommand command = new HandleAddCommand(dao);
 
         List<String> args = List.of("add");
@@ -31,7 +31,7 @@ public class HandleAddCommandTest {
     @Test
     public void test_execute_should_call_addItem_with_correct_values() throws IOException {
         // Arrange
-        GroceryListDAO dao = mock(GroceryListDAO.class);
+        GroceryListManager dao = mock(GroceryListManager.class);
         HandleAddCommand command = new HandleAddCommand(dao);
 
         List<String> args = List.of("add", "pomme", "2", "fruit");
@@ -51,7 +51,7 @@ public class HandleAddCommandTest {
     @Test
     public void test_execute_should_use_default_category_if_not_provided() throws IOException {
         // Arrange
-        GroceryListDAO dao = mock(GroceryListDAO.class);
+        GroceryListManager dao = mock(GroceryListManager.class);
         HandleAddCommand command = new HandleAddCommand(dao);
 
         List<String> args = List.of("add", "pomme", "2");

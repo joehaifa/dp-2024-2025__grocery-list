@@ -1,9 +1,9 @@
 package com.fges.commands;
 
-import java.io.IOException;
-import java.util.List;
+import com.fges.application.CommandContext;
 
-// Defines a generic executable command with a list of arguments.
+import java.io.IOException;
+
 public interface Command {
-    int execute(List<String> args) throws IOException;
+    int execute(CommandContext context) throws IOException;
 }

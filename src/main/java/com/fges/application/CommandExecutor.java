@@ -1,7 +1,7 @@
 package com.fges.application;
 
 import com.fges.commands.*;
-import com.fges.grocerydata.GroceryListDAO;
+import com.fges.grocerydata.GroceryListManager;
 import com.fges.storage.CsvStorage;
 import com.fges.storage.GroceryListStorage;
 import com.fges.storage.JsonStorage;
@@ -27,16 +27,15 @@ class CommandExecutor {
         String fileName = cmd.getOptionValue("s");
         String format = cmd.getOptionValue("f", "json").toLowerCase();
         GroceryListStorage storage = format.equals("csv") ? new CsvStorage(fileName) : new JsonStorage(fileName, objectMapper);
-        GroceryListDAO dao = new GroceryListDAO(storage);
+        GroceryListManager dao = new GroceryListManager(storage);
         List<String> positionalArgs = cmd.getArgList();
         String categoryOption = cmd.getOptionValue("c");
+
+        CommandContext context = new CommandContext(positionalArgs, categoryOption, fileName);
 
         Command command;
         switch (positionalArgs.get(0)) {
             case "add":
-                if (categoryOption != null) {
-                    positionalArgs.add(categoryOption);
-                }
                 command = new HandleAddCommand(dao);
                 break;
             case "remove":
@@ -45,15 +44,17 @@ class CommandExecutor {
             case "list":
                 command = new HandleListCommand(dao);
                 break;
-
-            case "info" :
+            case "info":
                 command = new HandleInfoCommand();
+                break;
+            case "web":
+                command = new HandleWebCommand(dao);
                 break;
             default:
                 System.err.println("Unknown command");
                 return 1;
         }
 
-        return command.execute(positionalArgs);
+        return command.execute(context);
     }
 }

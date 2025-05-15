@@ -18,18 +18,9 @@ public class CommandParser {
         try {
             CommandLine cmd = parser.parse(cliOptions, args);
 
-            // Get the positional command like "add", "remove", "info" etc.
             List<String> positionalArgs = cmd.getArgList();
 
-            if (!positionalArgs.isEmpty()) {
-                String mainCommand = positionalArgs.get(0);
-
-                // If the command is not "info", then -s must be present
-                if (!mainCommand.equals("info") && !cmd.hasOption("s")) {
-                    System.err.println("Error: -s (source) option is required for this command.");
-                    return null;
-                }
-            } else {
+            if (positionalArgs.isEmpty()) {
                 System.err.println("Error: No command provided.");
                 return null;
             }
