@@ -6,7 +6,7 @@ import java.util.List;
 import com.fges.application.CommandContext;
 import com.fges.grocerydata.GroceryListManager;
 
-// Handles the "remove" command to delete a grocery item from the list.
+// Handles the "remove" command to delete a grocery item from the data source.
 public class HandleRemoveCommand implements Command {
     private final GroceryListManager dao;
 

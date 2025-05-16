@@ -8,7 +8,7 @@ import com.fges.application.CommandContext;
 import com.fges.grocerydata.GroceryItem;
 import com.fges.grocerydata.GroceryListManager;
 
-// Handles the "list" command to display grocery items grouped by category.
+// Handles the "list" command to print grocery items grouped by category from the data source.
 public class HandleListCommand implements Command {
     private final GroceryListManager dao;
 

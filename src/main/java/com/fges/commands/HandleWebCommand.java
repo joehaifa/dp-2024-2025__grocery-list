@@ -5,7 +5,7 @@ import com.fges.grocerydata.GroceryListManager;
 import com.fges.webPage.MyGroceryShopAdapter;
 import fr.anthonyquere.GroceryShopServer;
 
-
+// Handles the "web" command to start a local HTTP server for grocery list management.
 public class HandleWebCommand implements Command {
     private final GroceryListManager dao;
 

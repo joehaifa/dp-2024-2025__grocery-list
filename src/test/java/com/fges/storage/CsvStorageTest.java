@@ -1,62 +1,71 @@
 package com.fges.storage;
 
-import org.junit.jupiter.api.Test;
-
 import com.fges.grocerydata.GroceryItem;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class CsvStorageTest {
+class CsvStorageTest {
 
-    @Test
-    public void test_load_should_return_items_from_csv_file() throws Exception {
-        // Arrange
-        File tempFile = File.createTempFile("grocery", ".csv");
-        tempFile.deleteOnExit();
-
-        try (FileWriter fw = new FileWriter(tempFile)) {
-            fw.write("GroceryItem,Quantity,Category\n");
-            fw.write("pomme,3,fruit\n");
-            fw.write("carotte,2,legume\n");
-        }
-
-        CsvStorage storage = new CsvStorage(tempFile.getAbsolutePath());
-
-        // Act
-        List<GroceryItem> groceryItems = storage.load();
-
-        // Assert
-        assertThat(groceryItems).hasSize(2);
-        assertThat(groceryItems.get(0).getName()).isEqualTo("pomme");
-        assertThat(groceryItems.get(0).getQuantity()).isEqualTo(3);
-        assertThat(groceryItems.get(0).getCategory()).isEqualTo("fruit");
-    }
+    @TempDir
+    Path tempDir;
 
     @Test
-    public void test_save_should_write_items_to_csv_file() throws Exception {
+    void saveAndLoadRoundTrip_shouldPersistItemsWithHeader() throws Exception {
         // Arrange
-        File tempFile = File.createTempFile("grocery", ".csv");
-        tempFile.deleteOnExit();
-
-        CsvStorage storage = new CsvStorage(tempFile.getAbsolutePath());
-        List<GroceryItem> groceryItems = List.of(
-                new GroceryItem("banane", 5, "fruit"),
-                new GroceryItem("courgette", 1, "legume")
+        Path file = tempDir.resolve("list.csv");
+        CsvStorage storage = new CsvStorage(file.toString());
+        List<GroceryItem> items = Arrays.asList(
+                new GroceryItem("pomme", 5, "fruit"),
+                new GroceryItem("pain", 1, "boulangerie")
         );
 
         // Act
-        storage.save(groceryItems);
+        storage.save(items);
+        List<GroceryItem> reloaded = storage.load(); 
+        List<String> rawLines = Files.readAllLines(file); 
 
         // Assert
-        List<String> lines = Files.readAllLines(tempFile.toPath());
-        assertThat(lines).hasSize(3);
-        assertThat(lines.get(0)).isEqualTo("GroceryItem,Quantity,Category");
-        assertThat(lines.get(1)).isEqualTo("banane,5,fruit");
-        assertThat(lines.get(2)).isEqualTo("courgette,1,legume");
+        assertEquals(2, reloaded.size());
+        assertEquals("pomme",        reloaded.get(0).getName());
+        assertEquals("fruit",        reloaded.get(0).getCategory());
+        assertEquals("boulangerie",  reloaded.get(1).getCategory());
+        assertEquals("GroceryItem,Quantity,Category", rawLines.get(0),
+                "First line must be CSV header");
+        assertEquals(3, rawLines.size(), "Header + 2 data lines expected");
+    }
+
+    @Test
+    void load_shouldReturnEmptyList_whenCsvFileContainsOnlyHeader() throws Exception {
+        // Arrange
+        Path file = tempDir.resolve("empty.csv");
+        Files.write(file, Collections.singletonList("GroceryItem,Quantity,Category"));
+        CsvStorage storage = new CsvStorage(file.toString());
+
+        // Act
+        List<GroceryItem> out = storage.load();
+
+        // Assert
+        assertTrue(out.isEmpty(), "No data rows → expect empty list");
+    }
+
+    @Test
+    void load_shouldReturnEmptyList_whenFileDoesNotExist() {
+        // Arrange
+        Path file = tempDir.resolve("missing.csv");
+        CsvStorage storage = new CsvStorage(file.toString());
+
+        //  Act
+        List<GroceryItem> out = storage.load();
+
+        // Assert
+        assertTrue(out.isEmpty(), "Missing file should give empty list, not exception");
     }
 }

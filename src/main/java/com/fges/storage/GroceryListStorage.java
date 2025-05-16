@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.fges.grocerydata.GroceryItem;
 
-// Defines the contract for loading and saving grocery items.
+// Defines a storage interface for loading and saving grocery items in various formats.
 public interface GroceryListStorage {
     List<GroceryItem> load();
     void save(List<GroceryItem> groceryItems) throws IOException;

@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import com.fges.grocerydata.GroceryItem;
 
-// Handles loading and saving grocery items to a CSV file.
+// Loads and saves grocery items from and to a CSV file using line-based parsing.
 public class CsvStorage implements GroceryListStorage {
     private final String filePath;
 

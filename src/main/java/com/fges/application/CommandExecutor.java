@@ -11,7 +11,7 @@ import org.apache.commons.cli.CommandLine;
 import java.io.IOException;
 import java.util.List;
 
-// Executes the appropriate command based on parsed CLI arguments.
+// Executes the appropriate command using CLI arguments wrapped in a context object.
 
 class CommandExecutor {
     private final ObjectMapper objectMapper;

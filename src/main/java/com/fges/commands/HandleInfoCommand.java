@@ -3,9 +3,8 @@ package com.fges.commands;
 import com.fges.application.CommandContext;
 
 import java.time.LocalDate;
-import java.util.List;
 
-// Handles the "info" command to display the current date, operating system, and Java version.
+// Handles the "info" command to print system information such as date, OS, and Java version.
 public class HandleInfoCommand implements Command {
 
     @Override

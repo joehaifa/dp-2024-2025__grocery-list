@@ -2,56 +2,67 @@ package com.fges.storage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fges.grocerydata.GroceryItem;
-
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
-import java.io.File;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class JsonStorageTest {
+class JsonStorageTest {
+
+    @TempDir
+    Path tempDir;
 
     @Test
-    public void test_save_and_load_should_work_consistently() throws Exception {
+    void saveAndLoadRoundTrip_shouldPersistAllItems() throws Exception {
         // Arrange
-        File tempFile = File.createTempFile("grocery", ".json");
-        tempFile.deleteOnExit();
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonStorage storage = new JsonStorage(tempFile.getAbsolutePath(), objectMapper);
-
-        List<GroceryItem> itemsToSave = List.of(
-                new GroceryItem("pomme", 3, "fruit"),
-                new GroceryItem("carotte", 1, "legume")
+        Path file = tempDir.resolve("list.json");
+        JsonStorage storage = new JsonStorage(file.toString(), new ObjectMapper());
+        List<GroceryItem> items = Arrays.asList(
+                new GroceryItem("lait", 2, "frais"),
+                new GroceryItem("riz", 1, "épicerie")
         );
 
-        // Act
-        storage.save(itemsToSave);
-        List<GroceryItem> loadedGroceryItems = storage.load();
+        //Act
+        storage.save(items);
+        List<GroceryItem> reloaded = storage.load();
 
-        // Assert
-        assertThat(loadedGroceryItems).hasSize(2);
-        assertThat(loadedGroceryItems.get(0).getName()).isEqualTo("pomme");
-        assertThat(loadedGroceryItems.get(0).getQuantity()).isEqualTo(3);
-        assertThat(loadedGroceryItems.get(0).getCategory()).isEqualTo("fruit");
+        //Assert
+        assertEquals(2, reloaded.size());
+        assertEquals("lait", reloaded.get(0).getName());
+        assertEquals("frais", reloaded.get(0).getCategory());
+        assertEquals("épicerie", reloaded.get(1).getCategory());
     }
 
     @Test
-    public void test_load_should_return_empty_list_if_file_invalid() throws Exception {
+    void load_shouldReturnEmptyList_whenFileDoesNotExist() {
+        //Arrange
+        Path file = tempDir.resolve("missing.json");
+        JsonStorage storage = new JsonStorage(file.toString(), new ObjectMapper());
+
+        //  Act
+        List<GroceryItem> out = storage.load();
+
+        //Assert
+        assertTrue(out.isEmpty(), "Missing file → expect empty list, not exception");
+    }
+
+    @Test
+    void load_shouldReturnEmptyList_whenFileContainsInvalidJson() throws Exception {
         // Arrange
-        File tempFile = File.createTempFile("invalid", ".json");
-        tempFile.deleteOnExit();
-
-        Files.writeString(tempFile.toPath(), "not a json");
-
-        JsonStorage storage = new JsonStorage(tempFile.getAbsolutePath(), new ObjectMapper());
+        Path file = tempDir.resolve("corrupt.json");
+        Files.write(file, Collections.singletonList("{ invalid json }"));
+        JsonStorage storage = new JsonStorage(file.toString(), new ObjectMapper());
 
         // Act
-        List<GroceryItem> result = storage.load();
+        List<GroceryItem> out = storage.load();
 
-        // Assert
-        assertThat(result).isEmpty();
+        //Assert
+        assertTrue(out.isEmpty(), "Corrupt JSON -> expect empty list");
     }
 }

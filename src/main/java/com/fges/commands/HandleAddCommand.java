@@ -7,6 +7,7 @@ import com.fges.grocerydata.GroceryListManager;
 import java.io.IOException;
 import java.util.List;
 
+// Handles the "add" command to insert a new grocery item into the list.
 public class HandleAddCommand implements Command {
     private final GroceryListManager dao;
 

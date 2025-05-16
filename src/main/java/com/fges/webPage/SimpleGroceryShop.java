@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+// Provides an in-memory implementation of MyGroceryShop for testing and demo purposes.
 public class SimpleGroceryShop implements MyGroceryShop {
     private final List<WebGroceryItem> groceries = new ArrayList<>();
 

@@ -7,6 +7,7 @@ import fr.anthonyquere.MyGroceryShop;
 import java.time.LocalDate;
 import java.util.List;
 
+// Adapts the GroceryListManager to the MyGroceryShop interface for web integration.
 public class MyGroceryShopAdapter implements MyGroceryShop {
     private final GroceryListManager dao;
 

@@ -7,7 +7,7 @@ import com.fges.grocerydata.GroceryItem;
 import java.io.IOException;
 import java.util.List;
 
-// Handles loading and saving grocery items to a JSON file.
+// Loads and saves grocery items to a JSON file using Jackson serialization.
 public class JsonStorage implements GroceryListStorage {
     private final ObjectMapper objectMapper;
     private final String filePath;

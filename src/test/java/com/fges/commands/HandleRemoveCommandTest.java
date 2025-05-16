@@ -1,63 +1,114 @@
 package com.fges.commands;
 
+import com.fges.application.CommandContext;
+import com.fges.grocerydata.GroceryListManager;
 import org.junit.jupiter.api.Test;
 
-import com.fges.grocerydata.GroceryListManager;
-
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.List;
+import java.io.PrintStream;
+import java.util.Arrays;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import static org.assertj.core.api.Assertions.assertThat;
 
-public class HandleRemoveCommandTest {
+class HandleRemoveCommandTest {
 
     @Test
-    public void test_execute_should_return_1_when_arguments_missing() throws IOException {
+    void execute_shouldReturn0_andPrintConfirmation_whenItemRemoved() throws IOException {
         // Arrange
         GroceryListManager dao = mock(GroceryListManager.class);
-        HandleRemoveCommand command = new HandleRemoveCommand(dao);
-        List<String> args = List.of("remove");
+        when(dao.removeItem("lait")).thenReturn(true);
+        CommandContext ctx = new CommandContext(
+                Arrays.asList("remove", "lait"),
+                null,
+                "list.json"
+        );
+        HandleRemoveCommand cmd = new HandleRemoveCommand(dao);
+
+        // Capture System.out
+        PrintStream originalOut = System.out;
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(buffer));
+
+        try {
+            // Act
+            int status = cmd.execute(ctx);
+            String output = buffer.toString();
+
+            // Assert
+            assertEquals(0, status);
+            assertTrue(output.contains("Removed: lait"));
+            verify(dao).removeItem("lait");
+        } finally {
+            System.setOut(originalOut);
+        }
+    }
+
+    @Test
+    void execute_shouldReturn1_andPrintError_whenItemNotFound() throws IOException {
+        // Arrange
+        GroceryListManager dao = mock(GroceryListManager.class);
+        when(dao.removeItem("farine")).thenReturn(false);
+        CommandContext ctx = new CommandContext(
+                Arrays.asList("remove", "farine"),
+                null,
+                "list.json"
+        );
+        HandleRemoveCommand cmd = new HandleRemoveCommand(dao);
+
+        // Capture System.err
+        PrintStream originalErr = System.err;
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        System.setErr(new PrintStream(buffer));
+
+        try {
+            // Act
+            int status = cmd.execute(ctx);
+            String err = buffer.toString();
+
+            // Assert
+            assertEquals(1, status);
+            assertTrue(err.contains("GroceryItem not found"));
+            verify(dao).removeItem("farine");
+        } finally {
+            System.setErr(originalErr);
+        }
+    }
+
+    @Test
+    void execute_shouldReturn1_andNotCallDao_whenSourceOptionMissing() throws IOException {
+        //Arrange
+        GroceryListManager dao = mock(GroceryListManager.class);
+        CommandContext ctx = new CommandContext(
+                Arrays.asList("remove", "eau"),
+                null,
+                null
+        );
 
         // Act
-        int result = command.execute(args);
+        int status = new HandleRemoveCommand(dao).execute(ctx);
 
         // Assert
-        assertThat(result).isEqualTo(1);
+        assertEquals(1, status);
         verifyNoInteractions(dao);
     }
 
     @Test
-    public void test_execute_should_return_0_when_item_removed() throws IOException {
-        // Arrange
+    void execute_shouldReturn1_andNotCallDao_whenItemNameMissing() throws IOException {
+        //Arrange
         GroceryListManager dao = mock(GroceryListManager.class);
-        when(dao.removeItem("banane")).thenReturn(true);
-
-        HandleRemoveCommand command = new HandleRemoveCommand(dao);
-        List<String> args = List.of("remove", "banane");
+        CommandContext ctx = new CommandContext(
+                Arrays.asList("remove"),
+                null,
+                "list.json"
+        );
 
         // Act
-        int result = command.execute(args);
+        int status = new HandleRemoveCommand(dao).execute(ctx);
 
         // Assert
-        assertThat(result).isEqualTo(0);
-        verify(dao).removeItem("banane");
-    }
-
-    @Test
-    public void test_execute_should_return_1_when_item_not_found() throws IOException {
-        // Arrange
-        GroceryListManager dao = mock(GroceryListManager.class);
-        when(dao.removeItem("banane")).thenReturn(false);
-
-        HandleRemoveCommand command = new HandleRemoveCommand(dao);
-        List<String> args = List.of("remove", "banane");
-
-        // Act
-        int result = command.execute(args);
-
-        // Assert
-        assertThat(result).isEqualTo(1);
-        verify(dao).removeItem("banane");
+        assertEquals(1, status);
+        verifyNoInteractions(dao);
     }
 }

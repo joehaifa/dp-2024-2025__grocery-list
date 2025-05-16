@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.fges.storage.GroceryListStorage;
 
-// Manages grocery items by interacting with the storage layer (load, add, remove).
+// Manages grocery items by loading, adding, and removing them through the storage layer.
 public class GroceryListManager {
     private final GroceryListStorage storage;
 

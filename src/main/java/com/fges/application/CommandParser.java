@@ -4,7 +4,7 @@ import org.apache.commons.cli.*;
 
 import java.util.List;
 
-// Gère l'analyse des arguments passés en ligne de commande.
+// Parses CLI arguments and returns a CommandLine object with options and positional arguments.
 public class CommandParser {
     public static CommandLine parseArgs(String[] args) {
         Options cliOptions = new Options();
